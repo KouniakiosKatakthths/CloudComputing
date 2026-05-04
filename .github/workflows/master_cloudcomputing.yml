@@ -26,12 +26,12 @@ jobs:
 
       - name: Install React dependencies
         run: npm install
-        working-directory: CloudComputing.client
+        working-directory: CloudComputing.Client
 
       # Output goes to CloudComputing.Server/wwwroot automatically (vite.config.ts)
       - name: Build React app
         run: npm run build
-        working-directory: CloudComputing.client
+        working-directory: CloudComputing.Client
 
       # Build & publish ASP.NET (wwwroot is now populated)
       - name: Set up .NET Core

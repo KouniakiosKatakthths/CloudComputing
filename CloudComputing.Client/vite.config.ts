@@ -57,7 +57,7 @@ export default defineConfig({
             key: fs.readFileSync(keyFilePath),
             cert: fs.readFileSync(certFilePath),
         }
-    }
+    },
     build: {
         outDir: path.resolve(__dirname, '../CloudComputing.Server/wwwroot'),
         emptyOutDir: true

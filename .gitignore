@@ -3,3 +3,14 @@
 ################################################################################
 
 /.vs
+
+# .NET build outputs
+bin/
+obj/
+
+# ASP.NET wwwroot
+CloudComputing.Server/wwwroot/
+
+# Visual Studio
+.vs/
+*.user

@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="cloudcomputing.client/CloudComputing.client.esproj">
+  <Project Path="cloudcomputing.client/CloudComputing.client.esproj" DisplayName="CloudComputing.Client">
     <Build />
     <Deploy />
   </Project>

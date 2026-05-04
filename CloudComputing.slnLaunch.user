@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "cloudcomputing.client\\CloudComputing.client.esproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "CloudComputing.Server\\CloudComputing.Server.csproj",
+        "Action": "StartWithoutDebugging"
+      }
+    ]
+  }
+]

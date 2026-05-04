@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:60880",
+"RedirectUrl": "",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "C:\\Users\\Kouniakis\\source\\repos\\CloudComputing\\CloudComputing.Server\\..\\cloudcomputing.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

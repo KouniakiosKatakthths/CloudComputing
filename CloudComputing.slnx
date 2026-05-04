@@ -1,8 +1,7 @@
 <Solution>
-  <Project Path="CloudComputing.AppHost/CloudComputing.AppHost.csproj" />
-  <Project Path="CloudComputing.Server/CloudComputing.Server.csproj" />
-  <Project Path="frontend/frontend.esproj">
+  <Project Path="cloudcomputing.client/CloudComputing.client.esproj">
     <Build />
     <Deploy />
   </Project>
+  <Project Path="CloudComputing.Server/CloudComputing.Server.csproj" />
 </Solution>

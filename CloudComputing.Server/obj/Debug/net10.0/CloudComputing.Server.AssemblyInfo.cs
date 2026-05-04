@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CloudComputing.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fdccc1f32d4ed636b526f8e0308776d9af766381")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f317f4ce8031514d27d9992fc3d4d258dda4e1eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("CloudComputing.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CloudComputing.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,6 +1,6 @@
-@Server_HostAddress = http://localhost:5343
+@CloudComputing.Server_HostAddress = http://localhost:5177
 
-GET {{Server_HostAddress}}/api/weatherforecast/
+GET {{CloudComputing.Server_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

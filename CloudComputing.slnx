@@ -1,7 +1,0 @@
-<Solution>
-  <Project Path="cloudcomputing.client/CloudComputing.client.esproj" DisplayName="CloudComputing.Client">
-    <Build />
-    <Deploy />
-  </Project>
-  <Project Path="CloudComputing.Server/CloudComputing.Server.csproj" />
-</Solution>

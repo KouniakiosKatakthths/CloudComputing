@@ -42,15 +42,6 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      # Install migration tools
-      - name: Install EF tools
-        run: dotnet tool install --global dotnet-ef
-
-      - name: Run migrations
-        run: dotnet ef database update --project CloudComputing.Server
-        env: 
-          ConnectionStrings__DefaultConnection: ${{ secrets.DB_CONNECTION_STRING }}
-
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 

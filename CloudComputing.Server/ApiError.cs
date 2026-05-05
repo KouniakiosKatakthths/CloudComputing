@@ -7,6 +7,10 @@
 
         ReportNameInvalid,
         ReportNotFound,
+
+        InvalidCredentials,
+
+        UserAlreadyExists,
     }
 
     public class ApiError(ErrorCodes errorCodes, string? message = null)

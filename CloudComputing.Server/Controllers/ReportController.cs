@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CloudComputing.Server.Controllers
 {
@@ -10,6 +11,7 @@ namespace CloudComputing.Server.Controllers
 
         private string UploadDirectory => Path.Combine(m_WebHostEnv.ContentRootPath, "uploads");
 
+        [Authorize]
         [HttpGet("{filename}")]
         public IActionResult Get(string filename)
         {
@@ -31,6 +33,7 @@ namespace CloudComputing.Server.Controllers
             return Ok(content);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("upload")]
         [RequestSizeLimit(10 * 1024 * 1024)]
         public async Task<IActionResult> Post(IFormFile file)

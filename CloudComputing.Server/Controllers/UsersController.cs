@@ -1,6 +1,7 @@
 ﻿using CloudComputing.Data;
 using CloudComputing.Data.DTO;
 using CloudComputing.Data.Models;
+using CloudComputing.Data.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,16 +20,35 @@ namespace CloudComputing.Server.Controllers
         private readonly IConfiguration m_Configuration = config;
 
         [Authorize]
-        [HttpGet("{user_id}")]
-        public IActionResult Get(Guid user_id, CancellationToken cancellationToken)
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMe()
         {
-            throw new NotImplementedException();
+            var user_id_s = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (user_id_s == null || !Guid.TryParse(user_id_s, out var user_id))
+                return Unauthorized(new ApiError(ErrorCodes.Unauthorized, "You are unothorized to perform this action"));
+
+            var user = await m_DbContext.Users.FindAsync(user_id);
+            if (user == null)
+                return NotFound(new ApiError(ErrorCodes.UserNotFound, "This user was not found"));
+
+            return Ok(new UserResponce 
+            { 
+                Id = user.Id,
+                Username = user.Username,
+            });
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] UserCreateDTO userCreateDTO)
         {
+            //Safekeeping
+            if (userCreateDTO.Username.Length > 128 ||
+                userCreateDTO.Password.Length > 128 || 
+                string.IsNullOrEmpty(userCreateDTO.Username) ||
+                string.IsNullOrEmpty(userCreateDTO.Password))
+                return BadRequest(new ApiError(ErrorCodes.UserInfoInvalid, "Bad user information provited"));
+
             if (await m_DbContext.Users.AnyAsync(u => u.Username == userCreateDTO.Username))
                 return BadRequest(new ApiError(ErrorCodes.UserAlreadyExists));
 
@@ -36,11 +56,21 @@ namespace CloudComputing.Server.Controllers
             {
                 Id = Guid.NewGuid(),
                 Username = userCreateDTO.Username,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(userCreateDTO.Password)
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(userCreateDTO.Password),
+                Role = UserRoles.User
             };
 
-            m_DbContext.Users.Add(user);
-            await m_DbContext.SaveChangesAsync();
+            try
+            {
+                //Can throw in duplication
+                m_DbContext.Users.Add(user);
+                await m_DbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                return BadRequest(new ApiError(ErrorCodes.UserInfoInvalid, "Username already in use"));
+            }
+
             return Ok();
         }
 
@@ -50,16 +80,26 @@ namespace CloudComputing.Server.Controllers
             var user = await m_DbContext.Users.FirstOrDefaultAsync(u => u.Username == authRequestDTO.Username);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(authRequestDTO.Password, user.PasswordHash))
-                return Unauthorized(new ApiError(ErrorCodes.InvalidCredentials));
+                return Unauthorized(new ApiError(ErrorCodes.InvalidCredentials, "Invalid username or password"));
 
             var token = GenerateToken(user);
-            return Ok(new { token });
+
+            Response.Cookies.Append("jwt", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTimeOffset.UtcNow.AddMinutes(double.Parse(m_Configuration["Jwt:ExpiryMinutes"]!))
+            });
+
+            return Ok();
         }
 
         [HttpGet("logout")]
         public IActionResult Logout()
         {
-            throw new NotImplementedException();
+            Response.Cookies.Delete("jwt");
+            return Ok();
         }
 
         private string GenerateToken(User user)
@@ -69,15 +109,16 @@ namespace CloudComputing.Server.Controllers
 
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.Username),
-        };
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+            };
 
             var token = new JwtSecurityToken(
                 issuer: m_Configuration["Jwt:Issuer"],
                 audience: m_Configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(double.Parse(m_Configuration["Jwt:ExpiryHours"]!)),
+                expires: DateTime.UtcNow.AddHours(double.Parse(m_Configuration["Jwt:ExpiryMinutes"]!)),
                 signingCredentials: creds
             );
 

@@ -1,4 +1,6 @@
+using BCrypt.Net;
 using CloudComputing.Data;
+using CloudComputing.Data.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -41,6 +43,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             ClockSkew = TimeSpan.FromMinutes(1),
         };
+
+        //Read token from cookie instead of header
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["jwt"];
+                return Task.CompletedTask;
+            }
+        };
     }
 );
 
@@ -60,7 +72,36 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+    
+    //Apply migrations
     db.Database.Migrate();
+
+    //Get config for creating default admin
+    var shouldCreateAdmin = config.GetValue<bool>("Admin:ShouldCreate");
+    var adminUsername = config["Admin:Username"];
+    var adminPassword = config["Admin:Password"];
+
+    if (shouldCreateAdmin && 
+        !string.IsNullOrEmpty(adminUsername) && 
+        !string.IsNullOrEmpty(adminPassword))
+    {
+        //Create if not exist
+        if (!await db.Users.AnyAsync(u => u.Username == adminUsername))
+        {
+            db.Users.Add(new User
+            {
+                Id = Guid.NewGuid(),
+                Username = adminUsername,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(adminPassword),
+                Role = UserRoles.Admin
+            });
+
+            await db.SaveChangesAsync();
+            Console.WriteLine($"Admin user '{adminUsername}' created.");
+        }
+    }
+
 }
 
 app.UseHttpsRedirection();

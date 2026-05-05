@@ -58,7 +58,15 @@
     --container-danger-bg: #1e1e2e;
     --container-danger-border: #f38ba8;
     --container-danger-title-color: #f38ba8;
+    --container-danger-active-bg: #af657a;
 
+    --user-form-field-bg: #121218;
+    --user-form-field-border: transparent;
+    --user-form-field-hover-border: #0874a7;
+    --user-form-button-bg: white;
+    --user-form-button-color: black;
+    --user-form-button-hover-bg: #afafaf;
+    --user-form-button-active-bg: #858585;
 
     --markdown-table-color: #cdd6f4;
     --markdown-table-border: #313244;
@@ -116,6 +124,12 @@ h2 {
   margin: 0px auto;
 }
 
+.content-small {
+  padding: 15px;
+  width: 40%;
+  margin: 0px auto;
+}
+
 .container {
   background-color: var(--container-bg);
   border: 1px var(--container-border) solid;
@@ -130,4 +144,90 @@ h2 {
 .container-danger {
   background-color: var(--container-danger-bg);
   border: 1px var(--container-danger-border) solid;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0px auto;
+  min-width: 9rem;
+  max-width: 20rem;
+}
+
+.user-form-field {
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 2px solid var(--user-form-field-border);
+  transition: border-color var(--color-transition);
+  background-color: var(--user-form-field-bg);
+}
+.user-form-field:hover {
+  border: 2px solid var(--user-form-field-hover-border);
+}
+.user-form-field:active {
+  border: 1px solid var(--user-form-field-hover-border);
+}
+
+.user-form-button {
+  padding: 9px 45px;
+  border-radius: 10px;
+  margin: 0px auto;
+  font-size: medium;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  border: 1px solid var(--user-form-button-bg);
+  color: var(--user-form-button-color);
+  background-color: var(--user-form-button-bg);
+  cursor: pointer;
+  transition: border-color var(--color-transition), background-color var(--color-transition);
+}
+.user-form-button:hover {
+  background-color: var(--user-form-button-hover-bg);
+  border-color: var(--user-form-button-hover-bg);
+}
+.user-form-button:active {
+  background-color: var(--user-form-button-active-bg);
+  border-color: var(--user-form-button-active-bg);
+}
+
+.button-blue {
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: var(--navbar-link-bg);
+  border: none;
+  color: var(--navbar-link-color);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color var(--color-transition), color var(--color-transition), border-color var(--color-transition);  
+  cursor: pointer;
+}
+.button-blue:hover {
+  background-color: var(--navbar-link-hover-bg);
+  color: var(--navbar-link-hover-color);
+  transition: background-color var(--color-transition);  
+}
+.button-blue:active {
+  background-color: var(--navbar-link-active-bg);
+}
+
+.button-blue-enabled {
+  background-color: var(--navbar-link-hover-bg);
+  color: var(--navbar-link-hover-color);
+}
+
+.button-danger {
+  background-color: var(--container-danger-bg);
+  border: 1px solid var(--container-danger-border);
+  color: var(--container-danger-title-color);
+}
+.button-danger:hover {
+  background-color: var(--container-danger-border);
+  color: white;
+}
+.button-danger:active {
+  background-color: var(--container-danger-active-bg);
+  border-color: var(--container-danger-active-bg);
+  color: white;
 }

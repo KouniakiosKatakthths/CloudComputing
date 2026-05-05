@@ -9,8 +9,11 @@
         ReportNotFound,
 
         InvalidCredentials,
+        Unauthorized,
 
         UserAlreadyExists,
+        UserNotFound,
+        UserInfoInvalid,
     }
 
     public class ApiError(ErrorCodes errorCodes, string? message = null)

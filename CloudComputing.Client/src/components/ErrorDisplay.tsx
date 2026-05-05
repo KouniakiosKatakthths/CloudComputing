@@ -3,11 +3,19 @@ export interface ApiError {
   message: string | null;
 };
 
-function ErrorDisplay({ error }: { error: ApiError }) {
+function ErrorDisplay({ error }: { error: ApiError | null }) {
+  if (error === null) 
+    return (
+      <div className="container container-danger">
+        <h2>Συνέβει κάποιο πρόβλημα</h2>
+        <p>Unknown server error</p>
+      </div>
+    )
+
   return (
     <div className="container container-danger">
       <h2>Συνέβει κάποιο πρόβλημα</h2>
-      {error.message && <p>Server error: {error.message}</p>}
+      {error.message !== null ? <p>{error.message}</p> : <p>Unknown server error</p>}
     </div>
   )
 }

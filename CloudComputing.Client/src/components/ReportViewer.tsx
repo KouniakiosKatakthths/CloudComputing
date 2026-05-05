@@ -9,21 +9,31 @@ function ReportViewer() {
   const [loading, setLoading] = useState(false);
   
   useEffect(() => {
-    
-    setLoading(true);
-    fetch("/api/v1/reports/ex1")
-      .then(res => res.text())
-      .then(setContent)
-    .catch(ex => console.log(ex))
-    .finally(() => setLoading(false))
+    const fetchReport = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/v1/reports/ex1");
+        const data = await res.text();
+        setContent(data);
+      } catch (ex) {
+        console.log(ex);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchReport();
   }, [])
 
   return (
-    <div className="report-viewer">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
-        {content}
-      </ReactMarkdown>
-    </div>
+    (!loading) ? 
+      <div className="report-viewer">
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
+          {content}
+        </ReactMarkdown>
+      </div>
+      :
+      <div>Loading</div>
   )
 }
 

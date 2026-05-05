@@ -1,12 +1,12 @@
 import Navbar from "../components/Navbar";
 
-function Home() {
+function Exercise1() {
   return (
     <>
       <Navbar></Navbar>
-      <h1>My Application</h1>
+      Ex1
     </>
   )
 }
 
-export default Home;  
+export default Exercise1;

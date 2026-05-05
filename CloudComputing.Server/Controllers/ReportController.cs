@@ -11,7 +11,7 @@ namespace CloudComputing.Server.Controllers
 
         private string UploadDirectory => Path.Combine(m_WebHostEnv.ContentRootPath, "uploads");
 
-        [HttpGet("{filename:string}")]
+        [HttpGet("{filename}")]
         public IActionResult Get(string filename)
         {
             //Verify that the path dosn't target any other file

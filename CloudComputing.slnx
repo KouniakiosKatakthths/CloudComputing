@@ -1,7 +1,10 @@
 <Solution>
+  <Folder Name="/API/">
+    <Project Path="CloudComputing.Data/CloudComputing.Data.csproj" Id="43991517-4d61-4826-87d1-114039cca860" />
+    <Project Path="CloudComputing.Server/CloudComputing.Server.csproj" />
+  </Folder>
   <Project Path="CloudComputing.Client/CloudComputing.Client.esproj">
     <Build />
     <Deploy />
   </Project>
-  <Project Path="CloudComputing.Server/CloudComputing.Server.csproj" />
 </Solution>

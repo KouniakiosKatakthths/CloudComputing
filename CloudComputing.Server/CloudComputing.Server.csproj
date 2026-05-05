@@ -20,6 +20,7 @@
     <ProjectReference Include="..\cloudcomputing.client\CloudComputing.Client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\CloudComputing.Data\CloudComputing.Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,6 @@ namespace CloudComputing.Server.Controllers
                 return BadRequest(new ApiError(ErrorCodes.ReportNameInvalid, "Invalid report name"));
 
             //Resolve path
-            var uploads = UploadDirectory;
             var report_path = Path.GetFullPath(Path.Combine(UploadDirectory, filename));
 
             //Verify the resolved path is actually inside the uploads folder
@@ -43,7 +42,6 @@ namespace CloudComputing.Server.Controllers
                 return BadRequest(new ApiError(ErrorCodes.ReportTooBig, "Uploaded report is too bid"));
 
             //Resolve path
-            var uploads = UploadDirectory;
             var report_path = Path.GetFullPath(Path.Combine(UploadDirectory, file.FileName));
 
             //Verify the resolved path is actually inside the uploads folder

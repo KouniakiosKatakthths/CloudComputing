@@ -29,7 +29,7 @@ namespace CloudComputing.Server.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] UserCreateDTO userCreateDTO)
         {
-            if (await db.Users.AnyAsync(u => u.Username == userCreateDTO.Username))
+            if (await m_DbContext.Users.AnyAsync(u => u.Username == userCreateDTO.Username))
                 return BadRequest(new ApiError(ErrorCodes.UserAlreadyExists));
 
             var user = new User
@@ -47,7 +47,7 @@ namespace CloudComputing.Server.Controllers
         [HttpPost("auth")]
         public async Task<IActionResult> Auth([FromBody] AuthRequestDTO authRequestDTO)
         {
-            var user = await db.Users.FirstOrDefaultAsync(u => u.Username == authRequestDTO.Username);
+            var user = await m_DbContext.Users.FirstOrDefaultAsync(u => u.Username == authRequestDTO.Username);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(authRequestDTO.Password, user.PasswordHash))
                 return Unauthorized(new ApiError(ErrorCodes.InvalidCredentials));

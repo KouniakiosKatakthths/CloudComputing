@@ -1,10 +1,12 @@
 import Navbar from "../components/Navbar";
+import ReportViewer from "../components/ReportViewer";
 
 function Exercise1() {
   return (
     <>
       <Navbar></Navbar>
-      Ex1
+      
+      <ReportViewer></ReportViewer>
     </>
   )
 }

@@ -1,5 +1,4 @@
-﻿using CloudComputing.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace CloudComputing.Server.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace CloudComputing.Data
+﻿namespace CloudComputing.Server
 {
     public enum ErrorCodes
     {

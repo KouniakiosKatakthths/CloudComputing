@@ -51,6 +51,7 @@ namespace CloudComputing.Server.Controllers
             if (!report_path.StartsWith(UploadDirectory + Path.DirectorySeparatorChar))
                 return BadRequest(new ApiError(ErrorCodes.ReportNameInvalid, "The uploaded report name is not valid"));
 
+            Directory.CreateDirectory(UploadDirectory);
             using var stream = System.IO.File.Create(report_path);
             await file.CopyToAsync(stream);
 

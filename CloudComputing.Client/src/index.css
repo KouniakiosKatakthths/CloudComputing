@@ -55,6 +55,14 @@
 
     --container-bg: #0E2836;
     --container-border: #00ADFE;
+
+    --markdown-table-color: #cdd6f4;
+    --markdown-table-border: #313244;
+    --markdown-table-th-bg: #1e1e2e;
+    --markdown-table-td-bg: #181825;
+    --markdown-table-td-hover-bg: #24273a;
+
+    --code-border: #2a2a36;
   }
 }
 
@@ -161,4 +169,55 @@ h2 {
   max-width: 900px;
   margin: 2rem auto;
   text-align: left;
+}
+
+.report-viewer pre {
+  font-size: 14px;
+  overflow-x: auto;
+}
+
+.report-viewer code {
+  font-family: 'Consolas', 'Fira Code', monospace;
+  border-radius: 10px;
+  border: 1px var(--code-border) solid;
+}
+
+/* Inline code (not inside a block) */
+.report-viewer :not(pre) > code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.report-viewer table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 14px;
+  overflow: hidden;
+  border: 1px solid var(--markdown-table-border);
+}
+
+.report-viewer th {
+  background: var(--markdown-table-th-bg);
+  border-bottom: 3px solid var(--markdown-table-border);
+  color: var(--markdown-table-color);
+  font-weight: 500;
+  text-align: left;
+  padding: 10px 14px;
+}
+
+.report-viewer td {
+  padding: 9px 14px;
+  background: var(--markdown-table-td-bg);
+  color: var(--markdown-table-color);
+  border-bottom: 1px solid var(--markdown-table-border);
+}
+
+.report-viewer tr:hover td {
+  background: var(--markdown-table-td-hover-bg);
+}
+
+.report-viewer tr:last-child td {
+  border-bottom: none;
 }

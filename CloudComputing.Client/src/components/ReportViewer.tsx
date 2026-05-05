@@ -1,7 +1,9 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
-import 'highlight.js/styles/github.css'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import 'highlight.js/styles/github-dark.css'
 import { useEffect, useState } from 'react';
 
 function ReportViewer() {
@@ -12,7 +14,7 @@ function ReportViewer() {
     const fetchReport = async () => {
       setLoading(true);
       try {
-        const res = await fetch("/api/v1/reports/ex1");
+        const res = await fetch("/api/v1/reports/Ask1.md");
         const data = await res.text();
         setContent(data);
       } catch (ex) {
@@ -28,7 +30,13 @@ function ReportViewer() {
   return (
     (!loading) ? 
       <div className="report-viewer">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
+        <ReactMarkdown
+          remarkPlugins={[remarkMath, remarkGfm]}
+          rehypePlugins={[
+            rehypeKatex,
+            [rehypeHighlight, { ignoreMissing: true }],
+          ]}
+        >
           {content}
         </ReactMarkdown>
       </div>

@@ -21,7 +21,7 @@ function ReportViewer() {
   `
 
   return (
-    <div style={{ maxWidth: '800px', margin: '2rem auto', padding: '0 1rem' }}>
+    <div className="report-viewer">
       <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
         {markdownContent}
       </ReactMarkdown>

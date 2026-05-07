@@ -18,7 +18,6 @@ function Navbar() {
       <div className="navbar-links">
         <NavLink className={({ isActive }) => isActive ? "button-blue button-blue-enabled" : "button-blue" } to="/">Αρχική</NavLink>
         <NavLink className={({ isActive }) => isActive ? "button-blue button-blue-enabled" : "button-blue" } to="/ex1">Εργασία 1</NavLink>
-        <NavLink className={({ isActive }) => isActive ? "button-blue button-blue-enabled" : "button-blue" } to="/about">Σχετικά</NavLink>
         <button onClick={handleLogout} style={{ "marginLeft": "20px" }} className="button-blue button-danger">Έξοδος</button>
       </div>
     </nav>

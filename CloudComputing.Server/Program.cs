@@ -1,6 +1,7 @@
 using BCrypt.Net;
 using CloudComputing.Data;
 using CloudComputing.Data.Models;
+using CloudComputing.Server;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -51,6 +52,35 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             {
                 context.Token = context.Request.Cookies["jwt"];
                 return Task.CompletedTask;
+            },
+
+            OnChallenge = async context =>
+            {
+                // Prevent default behavior
+                context.HandleResponse();
+
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                context.Response.ContentType = "application/json";
+
+                var error = new ApiError(
+                    ErrorCodes.Unauthorized,
+                    "Access token is missing or invalid"
+                );
+
+                await context.Response.WriteAsJsonAsync(error);
+            },
+
+            OnForbidden = async context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                context.Response.ContentType = "application/json";
+
+                var error = new ApiError(
+                    ErrorCodes.OperationForbiden,
+                    "You do not have permission to access this resource"
+                );
+
+                await context.Response.WriteAsJsonAsync(error);
             }
         };
     }

@@ -10,10 +10,12 @@
 
         InvalidCredentials,
         Unauthorized,
+        OperationForbiden,
 
         UserAlreadyExists,
         UserNotFound,
         UserInfoInvalid,
+        UserCannotDeleteSelf
     }
 
     public class ApiError(ErrorCodes errorCodes, string? message = null)

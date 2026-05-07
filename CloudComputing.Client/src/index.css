@@ -119,23 +119,20 @@ h2 {
 }
 
 .content {
-  padding: 15px;
-  width: 80%;
-  margin: 0px auto;
-}
-
-.content-small {
-  padding: 15px;
-  width: 40%;
+  padding: 15px 10rem;
+  width: 70%;
   margin: 0px auto;
 }
 
 .container {
   background-color: var(--container-bg);
   border: 1px var(--container-border) solid;
+  margin: 0px auto;
   border-radius: 20px;
   padding: 12px 22px;
   text-align: justify;
+  max-width: 900px;
+  min-width: 450px;
 }
 .container p {
   margin: 0;
@@ -230,4 +227,13 @@ h2 {
   background-color: var(--container-danger-active-bg);
   border-color: var(--container-danger-active-bg);
   color: white;
+}
+
+.text-list-header {
+  margin-top: 20px;
+  margin-bottom: 2px;
+}
+
+.text-list-p {
+  margin-bottom: 2px;
 }

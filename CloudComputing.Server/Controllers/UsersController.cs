@@ -35,6 +35,7 @@ namespace CloudComputing.Server.Controllers
             { 
                 Id = user.Id,
                 Username = user.Username,
+                Role = user.Role
             });
         }
 
@@ -70,6 +71,30 @@ namespace CloudComputing.Server.Controllers
             {
                 return BadRequest(new ApiError(ErrorCodes.UserInfoInvalid, "Username already in use"));
             }
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete([FromQuery] string username)
+        {
+            var user_id_s = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (user_id_s == null || !Guid.TryParse(user_id_s, out var user_id))
+                return Unauthorized(new ApiError(ErrorCodes.Unauthorized, "You are unothorized to perform this action"));
+
+            var active_user = await m_DbContext.Users.FindAsync(user_id);
+            if (active_user == null)
+                return NotFound(new ApiError(ErrorCodes.UserNotFound, "This user was not found"));
+
+            if (active_user.Username == username)
+                return BadRequest(new ApiError(ErrorCodes.UserCannotDeleteSelf, "You cannot delete yourself"));
+
+            var usr = await m_DbContext.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (usr == null) return NotFound(new ApiError(ErrorCodes.UserNotFound, "This user was not found"));
+
+            m_DbContext.Users.Remove(usr);
+            await m_DbContext.SaveChangesAsync();
 
             return Ok();
         }

@@ -28,7 +28,7 @@ export default function Login() {
     <>
       <Navbar></Navbar>
 
-      <div className="content-small">
+      <div className="content">
         {apiError && 
           <div style={{ "marginBottom": "15px" }}>
             <ErrorDisplay error={apiError}></ErrorDisplay>

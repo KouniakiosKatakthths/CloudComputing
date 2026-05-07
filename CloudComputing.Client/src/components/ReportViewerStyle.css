@@ -1,5 +1,6 @@
 .report-viewer {
   max-width: 900px;
+  min-width: 450px;
   margin: 2rem auto;
   text-align: left;
 }

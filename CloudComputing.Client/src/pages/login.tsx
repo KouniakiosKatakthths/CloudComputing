@@ -21,8 +21,7 @@ export default function Login() {
     setApiError(null);
 
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
+    
     const { success, error } = await login(username, password)
     if (!success) setApiError(error);
 

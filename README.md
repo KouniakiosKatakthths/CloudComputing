@@ -7,6 +7,10 @@ Finally the project supports Role based authentication.
 
 The project uses the Postgre database.
 
+The sample user for this project is:
+Username: User
+Password: User
+
 ## Settigns 
 The application provides some config options in the `appsettings.json` file in the Server project. This config files are been loaded by enviromental variables on Azure deployment 
 or from UserSecrets in local development.

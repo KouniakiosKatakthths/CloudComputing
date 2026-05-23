@@ -1,5 +1,6 @@
 # Cloud Computing
 This is a project of the course of Cloud Computing for the University of West Attica. The project is a simple report managing tool and viewer. Is features a ASP.NET backend and a React frontend.
+The reports themselfs are in markdown format.
 
 The frontend part is been served from the wwwroot of the backend so only one running instance is required. The authentication system is build using JWT tokens that are stored in HTTP only cookies. 
 Finally the project supports Role based authentication.

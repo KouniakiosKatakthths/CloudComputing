@@ -11,7 +11,8 @@ function Home() {
   const [user_status, setUserStatus] = useState('');
   const [delete_status, setDeleteStatus] = useState('');
   const [username, setUsername] = useState('');
-  const [error, setError] = useState<ApiError | null>(null)
+  const [creatingUser, setCreatingUser] = useState(false);
+  const [error, setError] = useState<ApiError | null>(null);
   const { user } = useAuth();
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +50,8 @@ function Home() {
 
     setUserStatus('Δημιουργία χρήστη...')
     try {
+      setCreatingUser(true);
+
       const res = await fetch('/api/v1/users/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -68,6 +71,9 @@ function Home() {
       setError(null);
 
       setUserStatus('Πρόβλημα στη δημιουργία χρήστη!')
+    }
+    finally {
+      setCreatingUser(false);
     }
   }
 
@@ -130,7 +136,7 @@ function Home() {
 
               { /* User create field */ }
               <h4 className="text-list-header">Δημιουργία χρήστη</h4>
-              <UserForm submit_button_text="Δημιουργία χρήστη" onSubmit={handleCreateUser}></UserForm>
+              <UserForm loading={creatingUser} submit_button_text="Δημιουργία χρήστη" onSubmit={handleCreateUser}></UserForm>
               {user_status && <p>{user_status}</p>}
 
               { /* User delete field */ }

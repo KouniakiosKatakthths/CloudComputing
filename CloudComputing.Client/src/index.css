@@ -67,6 +67,7 @@
     --user-form-button-color: black;
     --user-form-button-hover-bg: #afafaf;
     --user-form-button-active-bg: #858585;
+    --user-form-button-disabled-bg: #6d6d6d;
 
     --markdown-table-color: #cdd6f4;
     --markdown-table-border: #313244;
@@ -165,6 +166,9 @@ h2 {
 .user-form-field:active {
   border: 1px solid var(--user-form-field-hover-border);
 }
+.user-form-field:disabled {
+  border: 0px;
+}
 
 .user-form-button {
   padding: 9px 45px;
@@ -186,6 +190,11 @@ h2 {
 .user-form-button:active {
   background-color: var(--user-form-button-active-bg);
   border-color: var(--user-form-button-active-bg);
+}
+.user-form-button:disabled {
+  background-color: var(--user-form-button-disabled-bg);
+  border-color: var(--user-form-button-disabled-bg);
+  cursor: default;
 }
 
 .button-blue {
